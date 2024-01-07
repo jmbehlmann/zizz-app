@@ -42,8 +42,12 @@ class PostsController < ApplicationController
 
   def destroy
     post = Post.find_by(id: params[:id])
-    post.destroy
-    render json: { message: "Post successfully destroyed!" }
+    if post && post.user_id == current_user.id
+      post.destroy
+      render json: { message: "Post successfully destroyed!" }
+    else
+      render json: { error: "Post not found or you don't have permission to delete this post" }, status: :forbidden
+    end
   end
 
 end
