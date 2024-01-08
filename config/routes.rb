@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   patch "/posts/:id" => "posts#update"
   delete "/posts/:id" => "posts#destroy"
 
+  post "/relationships" => "relationships#create"
+  delete "/relationships/:id" => "relationships#destroy"
 end
