@@ -1,9 +1,30 @@
 class RelationshipsController < ApplicationController
 
+  def index
+    @relationships = Relationship.where(
+      follower_id: current_user.id,
+      leader_id: params[:leader_id]
+    )
+    render :index
+  end
+
+  def show
+    @relationship = Relationship.where(
+      follower_id: current_user.id,
+      leader_id: params[:leader_id]
+    )
+  end
+
   def create
-    user = User.find(params[:leader_id])
-    current_user.follow(user)
-    render json: {message: "youre following someone new"}
+    @relationship = Relationship.new(
+      follower_id: current_user.id,
+      leader_id: params[:leader_id]
+    )
+    if @relationship.save
+      render json: {message: "youre following someone new"}
+    else
+      render json: {message: "there was a problem"}
+    end
   end
 
   def destroy

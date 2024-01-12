@@ -3,12 +3,17 @@ class PostsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    followed_user_ids = current_user.following.pluck(:id)
-    user_post_ids = current_user.posts.pluck(:id)
-    followed_posts = Post.where(user_id: followed_user_ids)
-    user_posts = Post.where(id: user_post_ids)
+    if params[:user_id].present?
+      user = User.find(params[:user_id])
+      @posts = user.posts.order(created_at: :desc)
+    else
+      followed_user_ids = current_user.following.pluck(:id)
+      user_post_ids = current_user.posts.pluck(:id)
+      followed_posts = Post.where(user_id: followed_user_ids)
+      user_posts = Post.where(id: user_post_ids)
 
-    @posts = (user_posts + followed_posts).uniq.sort_by(&:created_at).reverse
+      @posts = (user_posts + followed_posts).uniq.sort_by(&:created_at).reverse
+    end
     render :index
   end
 
