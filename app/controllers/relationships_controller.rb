@@ -1,7 +1,7 @@
 class RelationshipsController < ApplicationController
 
   def index
-    if params[:leader_id].present?
+    if params[:follower_toggle].present?
       @relationships = Relationship.where(
         leader_id: current_user.id,
         # leader_id: params[:leader_id]
