@@ -3,7 +3,7 @@ class RelationshipsController < ApplicationController
   def index
     @relationships = Relationship.where(
       follower_id: current_user.id,
-      leader_id: params[:leader_id]
+      # leader_id: params[:leader_id]
     )
     render :index
   end
