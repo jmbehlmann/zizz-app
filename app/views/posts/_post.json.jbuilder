@@ -1,5 +1,6 @@
 json.id post.id
 json.user_id post.user_id
+json.username post.user.name
 json.text post.text
 json.formatted_created_at post.formatted_created_at
 json.created_at post.created_at
