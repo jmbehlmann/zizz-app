@@ -1,10 +1,17 @@
 class RelationshipsController < ApplicationController
 
   def index
-    @relationships = Relationship.where(
-      follower_id: current_user.id,
-      # leader_id: params[:leader_id]
-    )
+    if params[:leader_id].present?
+      @relationships = Relationship.where(
+        leader_id: current_user.id,
+        # leader_id: params[:leader_id]
+      )
+    else
+      @relationships = Relationship.where(
+        follower_id: current_user.id,
+        # leader_id: params[:leader_id]
+      )
+    end
     render :index
   end
 
